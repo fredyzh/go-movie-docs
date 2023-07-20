@@ -1,0 +1,68 @@
+# Architect
+
+**Microservice containerized cloud solutions:**
+
+  - 3 portable docker images on docker hub
+  - 2 independent cloud databases
+  - independent user autherization api (docs:↗)
+
+
+![Movie Home](/movieDoc.jpg)
+
+## Docker Images
+
+```Dockerfile filename="Dockerfile(local)" {5} copy
+FROM golang:1.20
+
+WORKDIR /app
+
+COPY . .
+
+RUN go get -d -v ./...
+RUN go build -o bin/movie_ticket_back_api.exe ./cmd
+RUN [ "chmod", "+x", "/app/bin/movie_ticket_back_api.exe"]
+
+ENTRYPOINT [ "./bin/movie_ticket_back_api.exe" ]
+
+EXPOSE 3100
+```
+
+```Dockerfile filename="Dockerfile(remote) prebuild excutable binary" {5} copy
+FROM golang:1.20
+
+WORKDIR /app
+
+./bin ./bin
+
+RUN [ "chmod", "+x", "/app/bin/movie_ticket_back_api.exe"]
+
+ENTRYPOINT [ "./bin/movie_ticket_back_api.exe" ]
+
+EXPOSE 3100
+```
+
+```Dockerfile filename="Dockerfile(front remote)" {5} copy
+FROM golang:1.20
+
+WORKDIR /app
+
+COPY ./bin ./bin
+COPY ./build ./build
+
+RUN [ "chmod", "+x", "/app/bin/movie_ticket_front_api_lnx.exe"]
+
+ENTRYPOINT ["./bin/movie_ticket_front_api_lnx.exe"]
+
+EXPOSE 8282
+```
+
+## AWS ECS Development
+ - docker hub images, easly migragte from cloud to cloud
+
+![Docker Hub](/docker_hub.png)
+
+ - AWS ECS
+
+![AWS ECS](/aws_ecs.png)
+
+

@@ -1,0 +1,17 @@
+{
+  "index": "Introduction",
+  "architect": "Architect",
+  "features": "Backend Features",
+  "front_features": "Frontend Features",
+  "thoughts": "Thoughts & Opinions",
+  "about": {
+    "title": "About Me",
+    "type": "page"
+  },
+  "contact": {
+    "title": "My Web ↗",
+    "type": "page",
+    "href": "https://feng-zhang-personal-portfolio.vercel.app/",
+    "newWindow": true
+  }
+}
